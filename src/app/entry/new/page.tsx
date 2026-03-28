@@ -19,25 +19,29 @@ export default function NewEntry() {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h1>New Entry</h1>
+        <div className="min-h-screen bg-neutral-950 text-white p-6">
+            <div className="max-w-2xl mx-auto space-y-4">
+                <input
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full bg-transparent text-2xl outline-none placeholder-neutral-500"
+                />
 
-            <input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                style={{ display: "block", marginBottom: "10px", width: "100%" }}
-            />
+                <textarea
+                    placeholder="Write your thoughts..."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    className="w-full h-[60vh] bg-transparent outline-none text-neutral-300 placeholder-neutral-600"
+                />
 
-            <textarea
-                placeholder="Write your thoughts..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={10}
-                style={{ width: "100%" }}
-            />
-
-            <button onClick={handleSave}>Save</button>
+                <button
+                    onClick={handleSave}
+                    className="bg-white text-black px-4 py-2 rounded-lg"
+                >
+                    Save
+                </button>
+            </div>
         </div>
     );
 }
