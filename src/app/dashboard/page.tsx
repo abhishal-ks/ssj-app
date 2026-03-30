@@ -27,7 +27,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Entries */}
-                <div className="space-y-4">
+                <div className="flex flex-col space-y-1">
                     {entries.map((entry: any) => (
                         <Link key={entry._id} href={`/entry/${entry._id}`}>
                             <div className="p-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 transition cursor-pointer">
@@ -36,6 +36,9 @@ export default function Dashboard() {
                                 </h3>
                                 <p className="text-sm text-neutral-400 mt-1 line-clamp-2">
                                     {entry.content}
+                                </p>
+                                <p className="text-xs text-neutral-600 mt-1">
+                                    {entry.createdAt}
                                 </p>
                             </div>
                         </Link>

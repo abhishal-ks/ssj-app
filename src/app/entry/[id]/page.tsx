@@ -19,6 +19,23 @@ export default function EntryPage() {
             });
     }, [id]);
 
+    // Autosave
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!content) return;
+
+            fetch(`/api/entries/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ title, content }),
+            });
+        }, 800); // debounce
+
+        return () => clearTimeout(timeout);
+    }, [title, content]);
+
     const handleUpdate = async () => {
         await fetch(`/api/entries/${id}`, {
             method: "PUT",
