@@ -2,10 +2,14 @@ import { connectDB } from "@/lib/db";
 import { Entry } from "@/lib/models/Entry";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: any) {
+export async function GET(
+    _: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     await connectDB();
 
-    const entry = await Entry.findById(params.id);
+    const {id } = await params;
+    const entry = await Entry.findById(id);
 
     return NextResponse.json(entry);
 }
