@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
@@ -9,98 +10,127 @@ export default function EntryPage() {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
     useEffect(() => {
+        if (!id) return;
+        setLoading(true);
+        setError("");
+
         fetch(`/api/entries/${id}`)
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error("Unable to load entry");
+                return res.json();
+            })
             .then((data) => {
-                setTitle(data.title);
-                setContent(data.content);
-            });
+                setTitle(data.title ?? "");
+                setContent(data.content ?? "");
+            })
+            .catch(() => setError("Could not load this entry."))
+            .finally(() => setLoading(false));
     }, [id]);
 
-    // Autosave
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (!content) return;
+        if (!id) return;
+        const timeout = setTimeout(async () => {
+            if (!title.trim() && !content.trim()) return;
 
-            fetch(`/api/entries/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ title, content }),
-            });
-        }, 800); // debounce
+            setStatus("saving");
+
+            try {
+                const res = await fetch(`/api/entries/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ title, content }),
+                });
+
+                if (!res.ok) {
+                    throw new Error("Unable to save entry");
+                }
+
+                setStatus("saved");
+                const reset = setTimeout(() => setStatus("idle"), 2000);
+                return () => clearTimeout(reset);
+            } catch (err) {
+                console.error(err);
+                setStatus("error");
+            }
+        }, 800);
 
         return () => clearTimeout(timeout);
-    }, [title, content]);
-
-    const handleUpdate = async () => {
-        await fetch(`/api/entries/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({ title, content }),
-        });
-
-        router.push("/dashboard");
-    };
+    }, [id, title, content]);
 
     const handleDelete = async () => {
-        await fetch(`/api/entries/${id}`, {
+        const res = await fetch(`/api/entries/${id}`, {
             method: "DELETE",
         });
 
-        router.push("/dashboard");
+        if (res.ok) {
+            router.push("/dashboard");
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-amber-50 via-stone-100 to-slate-200 flex items-center justify-center p-6">
-            <div className="w-full max-w-2xl bg-[#fffdf7]/90 backdrop-blur-md border border-slate-300 rounded-2xl shadow-xl p-8">
-
-                <h1 className="text-3xl font-serif text-slate-800 mb-6 tracking-wide">
-                    ✒️ Edit Entry
-                </h1>
-
-                <input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Title..."
-                    className="w-full mb-4 px-4 py-2 bg-amber-50/80 border border-slate-300 rounded-lg 
-                 focus:outline-none focus:ring-2 focus:ring-cyan-400 
-                 focus:border-cyan-400 transition
-                 text-slate-800 placeholder-slate-400 font-medium"
-                />
-
-                <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    rows={10}
-                    placeholder="Write your thoughts..."
-                    className="w-full mb-6 px-4 py-3 bg-amber-50/80 border border-slate-300 rounded-lg 
-                 focus:outline-none focus:ring-2 focus:ring-cyan-400 
-                 focus:border-cyan-400 transition
-                 text-slate-800 placeholder-slate-400 leading-relaxed resize-none font-serif"
-                />
-
-                <div className="flex gap-3">
-                    <button
-                        onClick={handleUpdate}
-                        className="px-5 py-2 bg-slate-800 text-amber-50 rounded-lg 
-                   hover:bg-slate-900 transition shadow-md
-                   hover:shadow-cyan-400/30"
-                    >
-                        Save Changes
-                    </button>
-
-                    <button
-                        onClick={handleDelete}
-                        className="px-5 py-2 bg-red-100 text-red-700 rounded-lg 
-                   hover:bg-red-200 transition border border-red-200"
-                    >
-                        Delete
-                    </button>
+        <div className="min-h-screen bg-neutral-950 text-white px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-4xl">
+                <div className="mb-6 flex flex-col gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20 backdrop-blur-xl sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Edit entry</p>
+                        <h1 className="mt-1 text-3xl font-semibold">Continue your story</h1>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Link href="/dashboard" className="rounded-2xl border border-neutral-800 bg-neutral-900 px-4 py-2 text-sm text-neutral-200 transition hover:border-sky-400 hover:text-white">
+                            Back to journal
+                        </Link>
+                        <span className="rounded-2xl bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-950">
+                            {status === "saving" ? "Saving..." : status === "saved" ? "Saved" : status === "error" ? "Save failed" : "Live draft"}
+                        </span>
+                    </div>
                 </div>
 
+                <div className="rounded-[2rem] border border-neutral-800 bg-neutral-900/90 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                    {loading ? (
+                        <div className="space-y-4 animate-pulse">
+                            <div className="h-10 rounded-2xl bg-neutral-800"></div>
+                            <div className="h-[52vh] rounded-[1.5rem] bg-neutral-800"></div>
+                        </div>
+                    ) : error ? (
+                        <div className="rounded-3xl border border-red-600 bg-red-950/50 p-6 text-sm text-red-100">
+                            {error}
+                        </div>
+                    ) : (
+                        <>
+                            <input
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Title"
+                                className="w-full border-b border-neutral-800 bg-transparent pb-4 text-4xl font-semibold text-white outline-none placeholder:text-neutral-500 focus:border-sky-400"
+                            />
+
+                            <textarea
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                rows={14}
+                                placeholder="Write your thoughts..."
+                                className="mt-8 h-[55vh] w-full rounded-[1.5rem] border border-neutral-800 bg-neutral-950/80 px-5 py-5 text-sm leading-7 text-neutral-100 outline-none placeholder:text-neutral-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/10 resize-none"
+                            />
+
+                            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-neutral-400">
+                                <p>Live autosave is enabled. Your changes are stored automatically.</p>
+                                <button
+                                    onClick={handleDelete}
+                                    className="rounded-2xl border border-red-600 bg-red-600/10 px-4 py-2 text-sm text-red-200 transition hover:bg-red-600/20"
+                                >
+                                    Delete entry
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );
