@@ -111,16 +111,16 @@ export default function Dashboard() {
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Journal</p>
-                        <div className="flex flex-wrap items-center gap-3">
-                            <h1 className="text-4xl font-semibold tracking-tight">SSJ</h1>
-                            <span className="rounded-full bg-neutral-900 px-3 py-1 text-xs text-neutral-400">
-                                {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
-                            </span>
+                            <div className="flex flex-wrap items-center gap-3">
+                                <h1 className="text-4xl font-semibold tracking-tight">SSJ</h1>
+                                <span className="rounded-full bg-neutral-900 px-3 py-1 text-xs text-neutral-400">
+                                    {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <Link href="/entry/new" className="inline-flex items-center justify-center rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:scale-[1.01]">
-                        + New entry
-                    </Link>
+                        <Link href="/entry/new" className="inline-flex items-center justify-center rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:scale-[1.01]">
+                            + New entry
+                        </Link>
                     </div>
                     <p className="mt-4 max-w-2xl text-sm text-neutral-400">
                         A focused journaling workspace with fast search, clean previews, and quick entry flow.
