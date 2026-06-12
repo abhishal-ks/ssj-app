@@ -107,7 +107,7 @@ export default function Dashboard() {
     return (
         <div className="min-h-screen bg-neutral-950 text-white px-4 py-6 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-5xl">
-                <header className="mb-8 rounded-[2rem] border border-neutral-800 bg-neutral-950/95 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+                <header className="mb-8 rounded-4xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Journal</p>
@@ -127,7 +127,7 @@ export default function Dashboard() {
                     </p>
                 </header>
 
-                <div className="sticky top-4 z-10 mb-6 rounded-[2rem] border border-neutral-800 bg-neutral-950/90 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+                <div className="sticky top-4 z-10 mb-6 rounded-4xl border border-neutral-800 bg-neutral-950/90 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
                     <label htmlFor="search" className="sr-only">Search entries</label>
                     <div className="relative">
                         <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-neutral-500">🔍</span>
@@ -145,16 +145,16 @@ export default function Dashboard() {
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((index) => (
-                                <div key={index} className="animate-pulse rounded-[2rem] border border-neutral-800 bg-neutral-900/80 p-6" />
+                                <div key={index} className="animate-pulse rounded-4xl border border-neutral-800 bg-neutral-900/80 p-6" />
                             ))}
                         </div>
                     ) : error ? (
-                        <div className="rounded-[2rem] border border-red-600 bg-red-950/40 p-6 text-red-100">
+                        <div className="rounded-4xl border border-red-600 bg-red-950/40 p-6 text-red-100">
                             <p className="text-sm font-semibold">Failed to load entries</p>
                             <p className="mt-2 text-sm text-red-200">{error}</p>
                         </div>
                     ) : visibleEntries.length === 0 ? (
-                        <div className="rounded-[2rem] border border-dashed border-neutral-800 bg-neutral-900/80 p-10 text-center">
+                        <div className="rounded-4xl border border-dashed border-neutral-800 bg-neutral-900/80 p-10 text-center">
                             <p className="text-sm uppercase tracking-[0.24em] text-neutral-500">No entries yet</p>
                             <h2 className="mt-4 text-2xl font-semibold">Start your first journal entry</h2>
                             <p className="mt-3 text-sm leading-6 text-neutral-400">Capture thoughts, ideas, and reflections in one place.</p>
