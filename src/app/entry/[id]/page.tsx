@@ -14,6 +14,7 @@ export default function EntryPage() {
     const [error, setError] = useState("");
     const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
+    // Load Entry Data - on mount and when the id changes
     useEffect(() => {
         if (!id) return;
         setLoading(true);
@@ -32,6 +33,7 @@ export default function EntryPage() {
             .finally(() => setLoading(false));
     }, [id]);
 
+    // Autosave - when title or content changes
     useEffect(() => {
         if (!id) return;
         const timeout = setTimeout(async () => {
@@ -77,6 +79,9 @@ export default function EntryPage() {
     return (
         <div className="min-h-screen bg-neutral-950 text-white px-4 py-6 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-4xl">
+
+                {/* Upper Section */}
+                
                 <div className="mb-6 flex flex-col gap-4 rounded-3xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-lg shadow-black/20 backdrop-blur-xl sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Edit entry</p>
@@ -92,11 +97,13 @@ export default function EntryPage() {
                     </div>
                 </div>
 
-                <div className="rounded-[2rem] border border-neutral-800 bg-neutral-900/90 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                {/* Writing Section */}
+
+                <div className="rounded-4xl border border-neutral-800 bg-neutral-900/90 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl">
                     {loading ? (
                         <div className="space-y-4 animate-pulse">
                             <div className="h-10 rounded-2xl bg-neutral-800"></div>
-                            <div className="h-[52vh] rounded-[1.5rem] bg-neutral-800"></div>
+                            <div className="h-[52vh] rounded-3xl bg-neutral-800"></div>
                         </div>
                     ) : error ? (
                         <div className="rounded-3xl border border-red-600 bg-red-950/50 p-6 text-sm text-red-100">
@@ -116,7 +123,7 @@ export default function EntryPage() {
                                 onChange={(e) => setContent(e.target.value)}
                                 rows={14}
                                 placeholder="Write your thoughts..."
-                                className="mt-8 h-[55vh] w-full rounded-[1.5rem] border border-neutral-800 bg-neutral-950/80 px-5 py-5 text-sm leading-7 text-neutral-100 outline-none placeholder:text-neutral-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/10 resize-none"
+                                className="mt-8 h-[55vh] w-full rounded-3xl border border-neutral-800 bg-neutral-950/80 px-5 py-5 text-sm leading-7 text-neutral-100 outline-none placeholder:text-neutral-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-400/10 resize-none"
                             />
 
                             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-neutral-400">
