@@ -66,15 +66,27 @@ export default function Dashboard() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [unauthorized, setUnauthorized] = useState(false);
 
     useEffect(() => {
+        let isUnauthorized = false;
+
         fetch("/api/entries")
-            .then((res) => {
+            .then(async (res) => {
+                if (res.status === 401) {
+                    isUnauthorized = true;
+                    setUnauthorized(true);
+                    throw new Error("Unauthorized");
+                }
                 if (!res.ok) throw new Error("Network response was not ok");
                 return res.json();
             })
             .then((data) => setEntries(data))
-            .catch(() => setError("Unable to load entries. Please try again."))
+            .catch(() => {
+                if (!isUnauthorized) {
+                    setError("Unable to load entries. Please try again.");
+                }
+            })
             .finally(() => setLoading(false));
     }, []);
 
@@ -147,6 +159,21 @@ export default function Dashboard() {
                             {[1, 2, 3].map((index) => (
                                 <div key={index} className="animate-pulse rounded-4xl border border-neutral-800 bg-neutral-900/80 p-6" />
                             ))}
+                        </div>
+                    ) : unauthorized ? (
+                        <div className="rounded-4xl border border-sky-500/30 bg-sky-950/20 p-6 text-sky-100">
+                            <p className="text-sm font-semibold text-sky-200">Sign in required</p>
+                            <p className="mt-2 text-sm text-sky-100">
+                                Log in to view your private journal entries. If you don&apos;t have an account yet, register to get started.
+                            </p>
+                            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                                <Link href="/auth/login" className="rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-300">
+                                    Login
+                                </Link>
+                                <Link href="/auth/register" className="rounded-2xl border border-neutral-800 bg-neutral-900 px-5 py-3 text-sm text-white transition hover:border-sky-400">
+                                    Register
+                                </Link>
+                            </div>
                         </div>
                     ) : error ? (
                         <div className="rounded-4xl border border-red-600 bg-red-950/40 p-6 text-red-100">
