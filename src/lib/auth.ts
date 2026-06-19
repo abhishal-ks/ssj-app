@@ -93,3 +93,40 @@ export async function getCurrentUser(reqOrCookie: Request | string) {
   await connectDB();
   return User.findById(userId);
 }
+
+// Function for multiple input validations for the password field
+export function validatePassword(password: string) {
+
+  // Minimum length check
+  if (password.length < 8) {
+    return "Password must be at least 8 characters long.";
+  }
+
+  // Maximum length check - Preventing LPDoS attacks
+  if (password.length > 40) {
+    return "Password is too long !";
+  }
+
+  // Complexity check - Must contain uppercase, lowercase, and digit
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+    return "Password must contain at least one uppercase letter, one lowercase letter, and one digit.";
+  }
+
+  return null;
+}
+
+// Function for multiple input validations for the username field
+export function validateUsername(username: string) {
+
+  // Minimum length check
+  if (username.length < 3) {
+    return "Username must be at least 3 characters long.";
+  }
+
+  // Maximum length check
+  if (username.length > 20) {
+    return "Username must be less than 20 characters long.";
+  }
+
+  return null;
+}

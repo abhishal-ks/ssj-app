@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/lib/models/User";
-import { createSession, hashPassword, sessionCookieOptions } from "@/lib/auth";
+import { createSession, hashPassword, sessionCookieOptions, validatePassword, validateUsername } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -22,6 +22,24 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: "Invalid username or password." },
       { status: 401 }
+    );
+  }
+
+  // Check username on defined parameters
+  const usernameError = validateUsername(username);
+  if (usernameError) {
+    return NextResponse.json(
+      { error: usernameError },
+      { status: 400 }
+    );
+  }
+
+  // Check password on defined parameters
+  const passwordError = validatePassword(password);
+  if (passwordError) {
+    return NextResponse.json(
+      { error: passwordError },
+      { status: 400 }
     );
   }
 
