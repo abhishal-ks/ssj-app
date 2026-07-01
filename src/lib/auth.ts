@@ -95,7 +95,7 @@ export async function getCurrentUser(reqOrCookie: Request | string) {
 }
 
 // Function for multiple input validations for the password field
-export function validatePassword(password: string) {
+export function validateRegistrationPassword(password: string) {
 
   // Minimum length check
   if (password.length < 8) {
@@ -110,6 +110,17 @@ export function validatePassword(password: string) {
   // Complexity check - Must contain uppercase, lowercase, and digit
   if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
     return "Password must contain at least one uppercase letter, one lowercase letter, and one digit.";
+  }
+
+  return null;
+}
+
+// Function for multiple input validations for the password field during login
+export function validateLoginPassword(password: string) {
+
+  // Maximum length check - Preventing LPDoS attacks
+  if (password.length > 40) {
+    return "Password is too long !";
   }
 
   return null;
