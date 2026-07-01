@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/lib/models/User";
-import { createSession, hashPassword, sessionCookieOptions, validatePassword, validateUsername } from "@/lib/auth";
+import { createSession, hashPassword, sessionCookieOptions, validateRegistrationPassword, validateUsername } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   }
 
   // Check password on defined parameters
-  const passwordError = validatePassword(password);
+  const passwordError = validateRegistrationPassword(password);
   if (passwordError) {
     return NextResponse.json(
       { error: passwordError },
