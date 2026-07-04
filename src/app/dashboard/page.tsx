@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { Search, Sparkles, Plus } from "lucide-react";
+import { Card, Button, PageShell, StatusPill, Input } from "@/components/ui";
 
 type EntryData = {
     _id: string;
@@ -117,78 +119,117 @@ export default function Dashboard() {
     const totalEntries = entries.length;
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white px-4 py-6 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-5xl">
-                <header className="mb-8 rounded-4xl border border-neutral-800 bg-neutral-950/95 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">Journal</p>
-                            <div className="flex flex-wrap items-center gap-3">
-                                <h1 className="text-4xl font-semibold tracking-tight">SSJ</h1>
-                                <span className="rounded-full bg-neutral-900 px-3 py-1 text-xs text-neutral-400">
+        <PageShell className="py-8 sm:py-10">
+            <div className="mx-auto max-w-6xl space-y-8">
+                <Card className="overflow-hidden border-0 bg-surface/95 p-0 shadow-[0_28px_70px_rgba(15,23,42,0.08)]">
+                    <div className="relative overflow-hidden p-8 sm:p-10">
+                        <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-accent/10 blur-3xl" />
+                        <div className="relative grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+                            <div className="max-w-2xl">
+                                <p className="text-xs uppercase tracking-[0.35em] text-muted">Journal</p>
+                                <h1 className="mt-3 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">A calm place for your thoughts.</h1>
+                                <p className="mt-4 text-sm leading-7 text-muted sm:text-base">
+                                    Review your recent reflections, search quickly, and add a new entry in a gentle writing experience.
+                                </p>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-3 justify-start lg:justify-end">
+                                <StatusPill color="accent">
                                     {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
-                                </span>
+                                </StatusPill>
+                                <Link href="/entry/new">
+                                    <Button variant="primary" size="lg" className="inline-flex items-center gap-2">
+                                        <Plus size={18} />
+                                        New entry
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-                        <Link href="/entry/new" className="inline-flex items-center justify-center rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:scale-[1.01]">
-                            + New entry
-                        </Link>
                     </div>
-                    <p className="mt-4 max-w-2xl text-sm text-neutral-400">
-                        A focused journaling workspace with fast search, clean previews, and quick entry flow.
-                    </p>
-                </header>
+                </Card>
 
-                <div className="sticky top-4 z-10 mb-6 rounded-4xl border border-neutral-800 bg-neutral-950/90 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-                    <label htmlFor="search" className="sr-only">Search entries</label>
-                    <div className="relative">
-                        <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-neutral-500">🔍</span>
-                        <input
-                            id="search"
-                            value={search}
-                            onChange={(event) => setSearch(event.target.value)}
-                            placeholder="Search entries..."
-                            className="w-full rounded-3xl border border-neutral-800 bg-neutral-900/90 py-4 pl-14 pr-4 text-sm text-white outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-400/10"
-                        />
-                    </div>
+                <div className="sticky top-4 z-20 pb-2 pt-2">
+                    <Card variant="muted" className="border-0 bg-surface/90 p-4 shadow-[0_16px_40px_rgba(15,23,42,0.05)] backdrop-blur-xl">
+                        <label htmlFor="search" className="sr-only">Search entries</label>
+                        <div className="relative">
+                            <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-muted">
+                                <Search size={16} />
+                            </span>
+                            <Input
+                                id="search"
+                                value={search}
+                                onChange={(event) => setSearch(event.target.value)}
+                                placeholder="Search entries..."
+                                className="pl-12"
+                            />
+                        </div>
+                    </Card>
                 </div>
 
                 <div className="space-y-4">
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((index) => (
-                                <div key={index} className="animate-pulse rounded-4xl border border-neutral-800 bg-neutral-900/80 p-6" />
+                                <Card key={index} className="animate-pulse h-32" />
                             ))}
                         </div>
                     ) : unauthorized ? (
-                        <div className="rounded-4xl border border-sky-500/30 bg-sky-950/20 p-6 text-sky-100">
-                            <p className="text-sm font-semibold text-sky-200">Sign in required</p>
-                            <p className="mt-2 text-sm text-sky-100">
-                                Log in to view your private journal entries. If you don&apos;t have an account yet, register to get started.
-                            </p>
-                            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                                <Link href="/auth/login" className="rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-300">
-                                    Login
+                        <Card className="border-0 bg-accent/10 text-accent shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
+                            <div className="flex items-center gap-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-background/60">
+                                    <Sparkles size={18} />
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Sign in required</p>
+                                    <p className="mt-1 text-sm text-accent/80">
+                                        Log in to view your private journal entries. If you don&apos;t have an account yet, register to get started.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-6 flex flex-wrap gap-3">
+                                <Link href="/auth/login">
+                                    <Button variant="primary">Login</Button>
                                 </Link>
-                                <Link href="/auth/register" className="rounded-2xl border border-neutral-800 bg-neutral-900 px-5 py-3 text-sm text-white transition hover:border-sky-400">
-                                    Register
+                                <Link href="/auth/register">
+                                    <Button variant="secondary">Register</Button>
                                 </Link>
                             </div>
-                        </div>
+                        </Card>
                     ) : error ? (
-                        <div className="rounded-4xl border border-red-600 bg-red-950/40 p-6 text-red-100">
-                            <p className="text-sm font-semibold">Failed to load entries</p>
-                            <p className="mt-2 text-sm text-red-200">{error}</p>
-                        </div>
+                        <Card className="border-red-600/50 bg-red-500/10 text-red-500">
+                            <p className="font-semibold">Failed to load entries</p>
+                            <p className="mt-2 text-sm text-red-500/80">{error}</p>
+                        </Card>
+                    ) : totalEntries === 0 ? (
+                        <Card variant="muted" className="border-0 bg-surface/70 py-12 text-center shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
+                            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                                <Sparkles size={22} />
+                            </div>
+                            <p className="mt-6 text-xs uppercase tracking-[0.24em] text-muted">No entries yet</p>
+                            <h2 className="mt-3 text-2xl font-semibold text-foreground">Start your first journal entry</h2>
+                            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted">Capture thoughts, ideas, and reflections in one place with a calm, distraction-free writing experience.</p>
+                            <div className="mt-6 flex justify-center">
+                                <Link href="/entry/new">
+                                    <Button variant="primary" className="inline-flex items-center gap-2">
+                                        <Plus size={18} />
+                                        Write your first entry
+                                    </Button>
+                                </Link>
+                            </div>
+                        </Card>
                     ) : visibleEntries.length === 0 ? (
-                        <div className="rounded-4xl border border-dashed border-neutral-800 bg-neutral-900/80 p-10 text-center">
-                            <p className="text-sm uppercase tracking-[0.24em] text-neutral-500">No entries yet</p>
-                            <h2 className="mt-4 text-2xl font-semibold">Start your first journal entry</h2>
-                            <p className="mt-3 text-sm leading-6 text-neutral-400">Capture thoughts, ideas, and reflections in one place.</p>
-                            <Link href="/entry/new" className="mt-6 inline-flex rounded-2xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:scale-[1.01]">
-                                Write your first entry
-                            </Link>
-                        </div>
+                        <Card variant="muted" className="border-0 bg-surface/70 py-12 text-center shadow-[0_14px_36px_rgba(15,23,42,0.05)]">
+                            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-surface/70 text-muted">
+                                <Search size={22} />
+                            </div>
+                            <p className="mt-6 text-xs uppercase tracking-[0.24em] text-muted">No results found</p>
+                            <h2 className="mt-3 text-xl font-semibold text-foreground">No entries match &quot;{search}&quot;</h2>
+                            <p className="mx-auto mt-3 max-w-xl text-sm text-muted">Try adjusting your search terms or browse all entries to find what you are looking for.</p>
+                            <div className="mt-6 flex justify-center">
+                                <Button variant="secondary" onClick={() => setSearch("")}>
+                                    Clear search
+                                </Button>
+                            </div>
+                        </Card>
                     ) : (
                         sectionOrder.map((section) => {
                             const sectionEntries = groupedEntries[section] || [];
@@ -196,9 +237,12 @@ export default function Dashboard() {
 
                             return (
                                 <section key={section} className="space-y-4">
-                                    <div className="flex items-center justify-between gap-4">
-                                        <h2 className="text-lg font-semibold text-white">{section}</h2>
-                                        <span className="text-xs uppercase tracking-[0.22em] text-neutral-500">
+                                    <div className="flex items-center justify-between gap-4 px-2">
+                                        <div className="flex items-center gap-3">
+                                            <h2 className="text-lg font-semibold text-foreground">{section}</h2>
+                                            <span className="h-px w-10 bg-accent/50" />
+                                        </div>
+                                        <span className="text-xs uppercase tracking-[0.22em] text-muted">
                                             {sectionEntries.length} {sectionEntries.length === 1 ? "entry" : "entries"}
                                         </span>
                                     </div>
@@ -210,22 +254,23 @@ export default function Dashboard() {
 
                                             return (
                                                 <Link key={entry._id} href={`/entry/${entry._id}`}>
-                                                    <div className="group overflow-hidden rounded-[1.75rem] border border-transparent bg-neutral-900 p-5 transition duration-150 hover:border-neutral-700 hover:bg-neutral-800 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05)]">
-                                                        <div className="flex flex-col gap-3">
-                                                            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                                                <h3 className="text-xl font-semibold text-white">{entry.title?.trim() ? entry.title : "Untitled"}</h3>
-                                                                <span className="text-xs uppercase tracking-[0.25em] text-neutral-500">{formatIndianDate(createdAt)}</span>
+                                                    <Card className="group relative h-full cursor-pointer overflow-hidden border-0 bg-surface/75 shadow-[0_14px_36px_rgba(15,23,42,0.05)] transition-all duration-200 hover:-translate-y-1.5 hover:bg-surface-strong/85 hover:shadow-[0_20px_44px_rgba(15,23,42,0.08)]">
+                                                        <div className="absolute inset-y-0 left-0 w-1.5 bg-accent/70" />
+                                                        <div className="ml-3 flex flex-col gap-3">
+                                                            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                                                                <h3 className="text-lg font-semibold text-foreground transition group-hover:text-accent">{entry.title?.trim() ? entry.title : "Untitled"}</h3>
+                                                                <span className="whitespace-nowrap text-xs uppercase tracking-[0.25em] text-muted">{formatIndianDate(createdAt)}</span>
                                                             </div>
-                                                            <p className="line-clamp-3 text-sm leading-6 text-neutral-300">{excerpt}</p>
-                                                            <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-500">
-                                                                <span>✦ {wordCount} words</span>
-                                                                <span className="inline-flex items-center gap-2">
-                                                                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-600" />
+                                                            <p className="line-clamp-3 text-sm leading-6 text-muted">{excerpt}</p>
+                                                            <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+                                                                <span className="rounded-full bg-surface px-2.5 py-1">✦ {wordCount} words</span>
+                                                                <span className="inline-flex items-center gap-2 rounded-full bg-surface px-2.5 py-1">
+                                                                    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                                                                     {formatRelativeDate(createdAt)}
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </Card>
                                                 </Link>
                                             );
                                         })}
@@ -237,9 +282,10 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <Link href="/entry/new" className="fixed bottom-5 right-5 z-30 rounded-full bg-sky-400 p-4 text-slate-950 shadow-xl shadow-sky-500/30 transition hover:scale-[1.03] sm:hidden">
-                +
+            {/* FAB */}
+            <Link href="/entry/new" className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition hover:scale-[1.03] sm:hidden" title="New entry">
+                <Plus size={22} />
             </Link>
-        </div>
+        </PageShell>
     );
 }

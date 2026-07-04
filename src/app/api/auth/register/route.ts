@@ -9,10 +9,11 @@ export async function POST(req: Request) {
   const body = await req.json();
   const username = String(body.username ?? "").trim().toLowerCase();
   const password = String(body.password ?? "");
+  const email = String(body.email ?? "").trim().toLowerCase();
 
-  if (!username || !password) {
+  if (!username || !password || !email) {
     return NextResponse.json(
-      { error: "Username and password are required." },
+      { error: "Username, email, and password are required !" },
       { status: 400 }
     );
   }
@@ -45,13 +46,14 @@ export async function POST(req: Request) {
 
   const user = await User.create({
     username,
+    email,
     passwordHash: hashPassword(password),
   });
 
   const token = await createSession(user._id.toString());
   const response = NextResponse.json({
     ok: true,
-    user: { id: user._id.toString(), username: user.username },
+    user: { id: user._id.toString(), username: user.username, email: user.email },
   });
 
   response.cookies.set("ssj_session", token, sessionCookieOptions);

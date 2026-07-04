@@ -17,14 +17,6 @@ export async function POST(req: Request) {
     );
   }
 
-  const user = await User.findOne({ username });
-  if (!user || user.passwordHash !== hashPassword(password)) {
-    return NextResponse.json(
-      { error: "Invalid username or password." },
-      { status: 401 }
-    );
-  }
-
   // Check username on defined parameters
   const usernameError = validateUsername(username);
   if (usernameError) {
@@ -40,6 +32,14 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: passwordError },
       { status: 400 }
+    );
+  }
+
+  const user = await User.findOne({ username });
+  if (!user || user.passwordHash !== hashPassword(password)) {
+    return NextResponse.json(
+      { error: "Invalid username or password !" },
+      { status: 401 }
     );
   }
 
