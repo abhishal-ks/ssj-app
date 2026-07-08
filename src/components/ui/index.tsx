@@ -64,7 +64,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = "Card";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
@@ -82,7 +82,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = "Input";
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> { }
+export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
@@ -125,7 +125,7 @@ export const StatusPill = React.forwardRef<HTMLSpanElement, StatusPillProps>(
 );
 StatusPill.displayName = "StatusPill";
 
-export interface PageShellProps extends React.HTMLAttributes<HTMLDivElement> { }
+export type PageShellProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const PageShell = React.forwardRef<HTMLDivElement, PageShellProps>(
   ({ className, ...props }, ref) => {

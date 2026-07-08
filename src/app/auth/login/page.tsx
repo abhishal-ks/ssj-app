@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { LockKeyhole, Sparkles } from "lucide-react";
-import { Button, Card, Input } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,6 +40,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background/90 px-4 py-12">
       <div className="w-full max-w-3xl rounded-4xl border border-border/70 bg-surface/90 shadow-[0_28px_90px_rgba(15,23,42,0.12)] backdrop-blur-xl">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          {/* Welcome Message Section */}
           <div className="rounded-4xl bg-linear-to-br from-accent/15 via-surface to-surface-strong p-10 sm:p-12">
             <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-accent/20 text-accent shadow-inner">
               <LockKeyhole size={24} />
@@ -58,6 +59,7 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* Login Form Section */}
           <div className="p-8 sm:p-10">
             <div className="mb-8 text-center">
               <p className="text-xs uppercase tracking-[0.3em] text-muted">Login</p>

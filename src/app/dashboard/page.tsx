@@ -283,7 +283,7 @@ export default function Dashboard() {
             </div>
 
             {/* FAB */}
-            <Link href="/entry/new" className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition hover:scale-[1.03] sm:hidden" title="New entry">
+            <Link href="/entry/new" className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-[0_20px_45px_rgba(0,0,0,0.22)] transition hover:scale-[1.03]" title="New entry">
                 <Plus size={22} />
             </Link>
         </PageShell>

@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/components/ThemeProvider";
 import { themes, ColorMode } from "@/lib/themes";
-import { Button, Card, StatusPill } from "@/components/ui";
+import { StatusPill } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 const modeLabels: Record<ColorMode, string> = {

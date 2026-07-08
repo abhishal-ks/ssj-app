@@ -85,16 +85,16 @@
 }
 
 [data-theme="mono"][data-mode="dark"] {
-  --background: #0f172a;
-  --surface: #111827;
-  --surface-strong: #1e293b;
-  --surface-muted: #17203a;
-  --foreground: #e2e8f0;
-  --muted: #94a3b8;
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #e2e8f0;
+  --background: #0b0f16;
+  --surface: #121722;
+  --surface-strong: #1b2230;
+  --surface-muted: #0e1420;
+  --foreground: #f7f7f8;
+  --muted: #9aa4b2;
+  --border: rgba(255, 255, 255, 0.12);
+  --accent: #f5f7fa;
   --accent-strong: #ffffff;
-  --accent-contrast: #0f172a;
+  --accent-contrast: #06080d;
   --shadow: 0 28px 80px rgba(2, 8, 23, 0.34);
 }
 
@@ -113,17 +113,17 @@
 }
 
 [data-theme="forest"][data-mode="dark"] {
-  --background: #0d1610;
-  --surface: #15221a;
-  --surface-strong: #1e2d23;
-  --surface-muted: #20322a;
-  --foreground: #e6efe9;
-  --muted: #aebfae;
-  --border: rgba(118, 164, 128, 0.16);
-  --accent: #7aa487;
-  --accent-strong: #94c7a4;
-  --accent-contrast: #0f1a13;
-  --shadow: 0 28px 80px rgba(8, 18, 12, 0.34);
+  --background: #0b140f;
+  --surface: #14211a;
+  --surface-strong: #1d2a22;
+  --surface-muted: #101915;
+  --foreground: #eef6eb;
+  --muted: #a7c0a3;
+  --border: rgba(122, 164, 135, 0.2);
+  --accent: #89b997;
+  --accent-strong: #67a57e;
+  --accent-contrast: #08120d;
+  --shadow: 0 28px 80px rgba(5, 14, 10, 0.34);
 }
 
 @theme inline {
@@ -146,20 +146,6 @@ body {
   line-height: 1.7;
   letter-spacing: -0.01em;
   transition: background-color 0.25s ease, color 0.25s ease;
-  background-image:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 20%),
-    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.35), transparent 18%),
-    linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0.18;
 }
 
 * {

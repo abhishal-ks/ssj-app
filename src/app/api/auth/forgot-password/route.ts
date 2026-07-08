@@ -1,5 +1,5 @@
 
-export async function POST(req: Request) {
+export async function POST() {
     // generate a temporary random password reset token and send it to the user's email
     // the token should be valid for 10 minutes and should be unique for each request
 

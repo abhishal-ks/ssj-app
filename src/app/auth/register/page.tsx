@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Sparkles, UserRoundPlus } from "lucide-react";
-import { Button, Card, Input } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 
 export default function RegisterPage() {
   const router = useRouter();
