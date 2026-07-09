@@ -137,7 +137,7 @@ export default function Dashboard() {
                                     {totalEntries} {totalEntries === 1 ? "entry" : "entries"}
                                 </StatusPill>
                                 <Link href="/entry/new">
-                                    <Button variant="primary" size="lg" className="inline-flex items-center gap-2">
+                                    <Button variant="primary" size="lg" className="inline-flex items-center gap-2 hover:cursor-pointer">
                                         <Plus size={18} />
                                         New entry
                                     </Button>
