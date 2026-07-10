@@ -29,7 +29,7 @@ export default function LogoutButton() {
 
   return (
     <Button
-      className="group h-10 gap-2 border-rose-500/20 bg-rose-500/10 px-3.5 text-rose-600 shadow-sm hover:cursor-pointer hover:border-rose-500/40 hover:bg-rose-500/15 hover:text-rose-700 dark:text-rose-300 dark:hover:text-rose-200"
+      className="group h-10 gap-2 border-rose-500/20 bg-rose-500/10 px-3.5 text-rose-600 shadow-sm hover:cursor-pointer hover:border-rose-500/40 hover:bg-rose-500/15 hover:text-rose-700 dark:text-rose-300 dark:hover:text-rose-600"
       onClick={handleLogout}
       disabled={isLoading}
       variant="secondary"
