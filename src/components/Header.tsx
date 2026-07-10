@@ -14,7 +14,7 @@ export default async function Header() {
   return (
     <header className="sticky top-0 z-40 px-3 pt-3 sm:px-4 lg:px-6">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-hidden rounded-[30px] border border-border/70 bg-surface/80 px-3 py-3 shadow-[0_30px_90px_rgba(15,23,42,0.12)] backdrop-blur-2xl sm:px-4 lg:px-5">
+        <div className="relative overflow-hidden rounded-[30px] bg-surface/80 px-3 py-3 shadow-[0_30px_90px_rgba(15,23,42,0.12)] backdrop-blur-2xl sm:px-4 lg:px-5">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(79,70,229,0.16),transparent_42%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.12),transparent_36%)]" />
 
           <div className="relative flex flex-wrap items-center justify-between gap-3">
@@ -26,8 +26,7 @@ export default async function Header() {
                 <BookOpen size={18} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold tracking-tight text-foreground">SSJ</p>
-                <p className="text-[11px] uppercase tracking-[0.38em] text-muted">Private journal</p>
+                <p className="text-xl font-semibold tracking-tight text-foreground">SSJ</p>
               </div>
             </Link>
 
@@ -36,7 +35,7 @@ export default async function Header() {
             <div className="flex items-center gap-2">
               {user ? (
                 <>
-                  <div className="hidden items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-600 sm:inline-flex dark:text-emerald-300">
+                  <div className="items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-600 sm:inline-flex dark:text-emerald-300">
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                     {user.username}
                   </div>
