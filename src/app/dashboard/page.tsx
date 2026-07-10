@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, Sparkles, Plus } from "lucide-react";
+import { ChevronDown, Search, Sparkles, Plus } from "lucide-react";
 import { Card, Button, PageShell, StatusPill, Input } from "@/components/ui";
 
 type EntryData = {
@@ -117,6 +117,7 @@ export default function Dashboard() {
 
     const sectionOrder = ["Today", "Yesterday", "Last 7 days", "Earlier"];
     const totalEntries = entries.length;
+    const [searchOpen, setSearchOpen] = useState(true);
 
     return (
         <PageShell className="py-8 sm:py-10">
@@ -126,7 +127,10 @@ export default function Dashboard() {
                         <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-accent/10 blur-3xl" />
                         <div className="relative grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
                             <div className="max-w-2xl">
-                                <p className="text-xs uppercase tracking-[0.35em] text-muted">Journal</p>
+                                <p className="text-xs uppercase tracking-[0.35em] text-muted">
+                                    <Sparkles size={14} className="inline-block mr-1.5" />
+                                    Private Journal
+                                </p>
                                 <h1 className="mt-3 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">A calm place for your thoughts.</h1>
                                 <p className="mt-4 text-sm leading-7 text-muted sm:text-base">
                                     Review your recent reflections, search quickly, and add a new entry in a gentle writing experience.
